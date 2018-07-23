@@ -26,7 +26,6 @@ app.get('/api/diapers', (req, res) => {
 });
 
 app.post('/api/diapers', (req, res) => {
-  console.log(req.body);
   diapers.create(req.body)
   .then(diaper => {
     res.json({ diapers: diaper });
@@ -34,10 +33,17 @@ app.post('/api/diapers', (req, res) => {
 });
 
 app.delete('/api/diapers/:id', (req, res) => {
-  console.log(req.params.id);
   diapers.remove(req.params.id)
   res.status(200).json({ diapers: "successful deletion "})
 });
+
+app.put('/api/diapers/:id', (req, res) => {
+  console.log(req.body);
+  
+  diapers.upDate(req.params.id, req.body)
+  .then( (diaper)=>res.status(200).json({diapers: diaper }) )
+});
+
 
 app.use(notFound)
 app.use(errorHandler)
