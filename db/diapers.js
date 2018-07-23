@@ -26,12 +26,12 @@ function create(diaper) {
   };
 };
 function remove(id) {
-  diapers.findOneAndDelete({ _id: id})
+  diapers.findOneAndDelete({ _id: id});
 }
 function upDate(id, body) {
   const result = Joi.validate(body, schema);
   if (result.error == null) {
-    return diapers.findOneAndUpdate({ _id: id }, body)
+    return diapers.findOneAndUpdate({ _id: id }, body);
   }
   else {
     return Promise.reject(result.error);

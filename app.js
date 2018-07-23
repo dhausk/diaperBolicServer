@@ -2,15 +2,15 @@ const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-
 const app = express();
 const port = process.env.PORT || 8080;
 
 const diapers = require('./db/diapers');
 
-app.use(cors())
-app.use(morgan('tiny'));
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(morgan(process.env.NODE_ENV !== 'production' ? 'tiny' : 'combined'));
+app.use(cors({ origin: true, credentials: true }));
 
 
 app.get('/', (req, res) => {
