@@ -14,9 +14,7 @@ app.use(bodyParser.json());
 
 
 app.get('/', (req, res) => {
-  diapers.getAll().then(diapers => {
     res.json({ data: "congrats you've hit the api diapers" });
-  });
 });
 
 app.get('/api/diapers/:id', (req, res) => {
