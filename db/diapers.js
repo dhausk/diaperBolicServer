@@ -11,8 +11,8 @@ const schema = Joi.object().keys({
   
 const diapers = db.get('diapers');
 
-function getAll() {
-  return diapers.find();
+function getAll(user) {
+  return diapers.find({userName: user});
 }
 
 function create(diaper) {

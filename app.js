@@ -19,8 +19,9 @@ app.get('/', (req, res) => {
   });
 });
 
-app.get('/api/diapers', (req, res) => {
-  diapers.getAll().then(diapers => {
+app.get('/api/diapers/:id', (req, res) => {
+  const user = req.params.id;
+  diapers.getAll(user).then(diapers => {
     res.json({diapers: diapers});
   });
 });
