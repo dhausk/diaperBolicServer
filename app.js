@@ -6,24 +6,30 @@ const bodyParser = require('body-parser');
 const app = express();
 const port = process.env.PORT || 8080;
 
-const babies = require('./db/Babies');
+const diapers = require('./db/diapers');
+app.use(cors())
 
-app.use(morgan('dev'));
+app.use(morgan('tiny'));
 app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
-  babies.getAll().then(baby => {
-    res.json(baby);
+  diapers.getAll().then(diapers => {
+    res.json({ data: "congrats you've hit the api diapers" });
   });
 });
-app.post('/', (req, res) => {
-  console.log(req.body);
-  babies.create(req.body).then(baby => {
-    res.json(baby);
-  }).catch((error) => {
-    res.status(500);
-    res.json(error);
+
+app.get('/api/', (req, res) => {
+  diapers.getAll().then(diapers => {
+    res.json({diapers: diapers});
   });
+});
+
+app.post('/api/', (req, res) => {
+  console.log(req.body);
+  diapers.create(req.body)
+  .then(diaper => {
+    res.json({ diapers: diaper });
+  })
 });
 
 app.listen(port, () => {
