@@ -24,9 +24,10 @@ function create(diaper) {
     return Promise.reject(result.error);
   };
 };
-// function remove(id) {
-//   diapers.findOneAndDelete()
-// }
+function remove(id) {
+  diapers.findOneAndDelete({ _id: id})
+}
 
 
-module.exports = { getAll, create }
+
+module.exports = { getAll, create, remove }
