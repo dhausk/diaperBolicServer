@@ -1,12 +1,12 @@
 const db = require('./connection');
 
-// const Joi = require('joi');
+const Joi = require('joi');
 
-// const schema = Joi.object().keys({
-  //   userName: Joi.string().min(2).required,
-  //   babyName: Joi.string().required,
-  //   type: Joi.string()
-  // });
+const schema = Joi.object().keys({
+    userName: Joi.string(),
+    babyName: Joi.string(),
+    type: Joi.number()
+  });
   
 const diapers = db.get('diapers');
 
@@ -15,14 +15,18 @@ function getAll() {
 }
 
 function create(diaper) {
-  // const result = Joi.validate(diaper, schema);
-  // if (result.error == null) {
-    console.log(diaper);
+  const result = Joi.validate(diaper, schema);
+  if (result.error == null) {
     diaper.created = new Date();
     return diapers.insert(diaper);
-  // }
-  // else {
-  //   return Promise.reject(result.error);
-  // };
+  }
+  else {
+    return Promise.reject(result.error);
+  };
 };
+// function remove(id) {
+//   diapers.findOneAndDelete()
+// }
+
+
 module.exports = { getAll, create }
