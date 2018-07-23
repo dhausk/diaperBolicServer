@@ -1,24 +1,23 @@
 const db = require('./connection');
-
 const Joi = require('joi');
-
+const diapers = db.get('diapers');
 const schema = Joi.object().keys({
     userName: Joi.string(),
     babyName: Joi.string(),
     type: Joi.number(),
     timeStamp: Joi.string()
   });
-  
-const diapers = db.get('diapers');
 
-function getAll(user) {
+function getAll(){
+  return diapers.find({});
+};
+function getUsersData(user) {
   return diapers.find({userName: user});
-}
-
+};
 function create(diaper) {
   const result = Joi.validate(diaper, schema);
   if (result.error == null) {
-    diaper.timeStamp = new Date();
+    if(!diaper.timeStamp) diaper.timeStamp = new Date();
     return diapers.insert(diaper);
   }
   else {
@@ -31,12 +30,11 @@ function remove(id) {
 function upDate(id, body) {
   const result = Joi.validate(body, schema);
   if (result.error == null) {
+    if (!diaper.timeStamp) diaper.timeStamp = new Date();
     return diapers.findOneAndUpdate({ _id: id }, body);
   }
   else {
     return Promise.reject(result.error);
   };
 }
-
-
-module.exports = { getAll, create, remove, upDate }
+module.exports = { getAll, getUsersData, create, remove, upDate }

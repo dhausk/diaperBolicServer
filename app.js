@@ -17,9 +17,14 @@ app.get('/', (req, res) => {
     res.json({ data: "congrats you've hit the api diapers download out app to track your diaper changes" });
 });
 
+app.get('/api/diapers/', (req, res) => {
+  diapers.getAll().then(diapers => {
+    res.json({ diapers: diapers });
+  });
+});
 app.get('/api/diapers/:id', (req, res) => {
   const user = req.params.id;
-  diapers.getAll(user).then(diapers => {
+  diapers.getUsersData(user).then(diapers => {
     res.json({diapers: diapers});
   });
 });
