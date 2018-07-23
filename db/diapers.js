@@ -5,7 +5,8 @@ const Joi = require('joi');
 const schema = Joi.object().keys({
     userName: Joi.string(),
     babyName: Joi.string(),
-    type: Joi.number()
+    type: Joi.number(),
+    timeStamp: Joi.string()
   });
   
 const diapers = db.get('diapers');
@@ -17,7 +18,7 @@ function getAll() {
 function create(diaper) {
   const result = Joi.validate(diaper, schema);
   if (result.error == null) {
-    diaper.created = new Date();
+    diaper.timeStamp = new Date();
     return diapers.insert(diaper);
   }
   else {
